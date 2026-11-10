@@ -7,7 +7,19 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Widgets)
 
-add_executable(ginga src/main.cpp)
+
+add_executable(ginga
+    src/main.cpp
+    src/gui/terminal_widget.h
+    src/gui/terminal_widget.cpp
+)
+
+# Release: GUI application (no console)
+# Debug: Console application (for logging)
+set_target_properties(ginga PROPERTIES
+    WIN32_EXECUTABLE "$<CONFIG:Release>"
+)
+
 target_link_libraries(ginga PRIVATE Qt6::Widgets)
 
 # Copy Qt runtime DLLs after each build (Windows)
