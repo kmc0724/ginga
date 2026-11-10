@@ -1,0 +1,44 @@
+
+BasedOnStyle: LLVM
+Language: Cpp
+
+# Linux Kernel 스타일
+IndentWidth: 8
+TabWidth: 8
+UseTab: Always
+
+# 줄 길이
+ColumnLimit: 80
+
+# 중괄호
+BreakBeforeBraces: Linux
+
+# 포인터와 참조
+PointerAlignment: Right
+ReferenceAlignment: Right
+
+# switch / case
+IndentCaseLabels: false
+
+# 접근 지정자
+AccessModifierOffset: -8
+
+# 함수 인자
+BinPackArguments: false
+BinPackParameters: false
+
+# 짧은 구문
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+
+# include 정렬
+SortIncludes: Never
+
+# 공백
+SpaceBeforeParens: ControlStatements
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+
+# 기타
+IndentPPDirectives: None
