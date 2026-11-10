@@ -65,6 +65,74 @@ void TerminalScreen::clear()
 	wrap_pending_ = false;
 }
 
+const CellAttributes &TerminalScreen::current_attributes() const
+{
+	return current_attributes_;
+}
+
+void TerminalScreen::set_attributes(const CellAttributes &attributes)
+{
+	current_attributes_ = attributes;
+}
+
+void TerminalScreen::reset_attributes()
+{
+	current_attributes_ = CellAttributes{};
+}
+
+void TerminalScreen::erase_range(std::size_t first, std::size_t last)
+{
+	std::fill(
+	    cells_.begin() + first, cells_.begin() + last, TerminalCell{});
+}
+
+void TerminalScreen::erase_in_display(int mode)
+{
+	const std::size_t cursor = index(cursor_column_, cursor_row_);
+
+	switch (mode) {
+	case 0: // Cursor to end of display
+		erase_range(cursor, cells_.size());
+		break;
+
+	case 1: // Start of display through cursor
+		erase_range(0, cursor + 1);
+		break;
+
+	case 2: // Entire display
+		erase_range(0, cells_.size());
+		break;
+
+	default:
+		break;
+	}
+}
+
+void TerminalScreen::erase_in_line(int mode)
+{
+	const std::size_t row_start =
+	    static_cast<std::size_t>(cursor_row_) * columns_;
+	const std::size_t row_end = row_start + columns_;
+	const std::size_t cursor = index(cursor_column_, cursor_row_);
+
+	switch (mode) {
+	case 0: // Cursor to end of line
+		erase_range(cursor, row_end);
+		break;
+
+	case 1: // Start of line through cursor
+		erase_range(row_start, cursor + 1);
+		break;
+
+	case 2: // Entire line
+		erase_range(row_start, row_end);
+		break;
+
+	default:
+		break;
+	}
+}
+
 void TerminalScreen::resize(int columns, int rows)
 {
 	if (columns <= 0 || rows <= 0)
@@ -157,6 +225,9 @@ void TerminalScreen::put_char(char32_t character)
 
 	TerminalCell new_cell;
 	new_cell.character = character;
+	new_cell.attributes = current_attributes_;
+	new_cell.foreground = current_foreground_;
+	new_cell.background = current_background_;
 
 	set_cell(cursor_column_, cursor_row_, new_cell);
 
@@ -171,6 +242,43 @@ void TerminalScreen::write(std::u32string_view text)
 {
 	for (char32_t character : text)
 		put_char(character);
+}
+
+Color TerminalScreen::current_foreground() const
+{
+	return current_foreground_;
+}
+
+Color TerminalScreen::current_background() const
+{
+	return current_background_;
+}
+
+void TerminalScreen::set_foreground(Color color)
+{
+	current_foreground_ = color;
+}
+
+void TerminalScreen::set_background(Color color)
+{
+	current_background_ = color;
+}
+
+void TerminalScreen::reset_foreground()
+{
+	current_foreground_ = default_foreground;
+}
+
+void TerminalScreen::reset_background()
+{
+	current_background_ = default_background;
+}
+
+void TerminalScreen::reset_style()
+{
+	reset_attributes();
+	reset_foreground();
+	reset_background();
 }
 
 } // namespace ginga

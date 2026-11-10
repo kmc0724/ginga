@@ -13,6 +13,8 @@ add_library(ginga_core STATIC
     src/core/terminal_screen.cpp
     src/core/utf8_decoder.h
     src/core/utf8_decoder.cpp
+    src/core/ansi_parser.h
+    src/core/ansi_parser.cpp
 )
 
 target_compile_features(ginga_core PUBLIC cxx_std_20)
@@ -87,6 +89,19 @@ if(BUILD_TESTING)
     add_test(
         NAME utf8_decoder_test
         COMMAND utf8_decoder_test
+    )
+
+    add_executable(ansi_parser_test
+        tests/ansi_parser_test.cpp
+    )
+
+    target_link_libraries(ansi_parser_test PRIVATE
+        ginga_core
+    )
+
+    add_test(
+        NAME ansi_parser_test
+        COMMAND ansi_parser_test
     )
 endif()
 

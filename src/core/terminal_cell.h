@@ -13,6 +13,9 @@ struct Color {
 	bool operator==(const Color &) const = default;
 };
 
+inline constexpr Color default_foreground{220, 228, 239};
+inline constexpr Color default_background{16, 20, 27};
+
 struct CellAttributes {
 	bool bold = false;
 	bool italic = false;
@@ -24,8 +27,8 @@ struct CellAttributes {
 
 struct TerminalCell {
 	char32_t character = U' ';
-	Color foreground{};
-	Color background{16, 20, 27};
+	Color foreground = default_foreground;
+	Color background = default_background;
 	CellAttributes attributes{};
 
 	bool operator==(const TerminalCell &) const = default;

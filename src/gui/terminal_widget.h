@@ -1,5 +1,7 @@
+
 #pragma once
 
+#include "ansi_parser.h"
 #include "terminal_screen.h"
 
 #include <QString>
@@ -22,6 +24,7 @@ private:
 	void populate_demo();
 
 	ginga::TerminalScreen screen_{1, 1};
+	ginga::AnsiParser parser_{screen_};
 
 	int cell_width_ = 1;
 	int cell_height_ = 1;
