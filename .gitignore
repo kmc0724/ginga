@@ -1,0 +1,53 @@
+# CMake
+build/
+build-*/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+compile_commands.json
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.VC.db
+*.VC.opendb
+
+# VS Code (keep shared project settings if needed)
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# Compiled binaries
+*.exe
+*.dll
+*.obj
+*.o
+*.pdb
+*.ilk
+*.lib
+*.exp
+
+# Qt generated files
+*_autogen/
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+id_rsa
+id_ed25519
+
+docs/
